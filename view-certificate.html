@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Alex+Brush&family=Allura&family=Bebas+Neue&family=Caveat:wght@400;700&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@400;600&family=Dancing+Script:wght@400;700&family=EB+Garamond:wght@400;600&family=Great+Vibes&family=Inter:wght@300;400;500;600;700&family=Lato:wght@400;700&family=Libre+Baskerville:wght@400;700&family=Lobster&family=Lora:ital,wght@0,400;0,600;1,400&family=Marcellus&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&family=Oswald:wght@400;600&family=PT+Serif:wght@400;700&family=Pacifico&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@400;600;700&family=Righteous&family=Roboto:wght@400;500;700&family=Satisfy&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -95,6 +96,45 @@
       width: 100%;
       height: auto;
       display: block;
+    }
+
+    .cert-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+      text-align: left;
+      background: rgba(15, 23, 42, 0.4);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.1);
+    }
+    .detail-item label {
+      display: block;
+      color: #94a3b8;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .detail-item div {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #f1f5f9;
+      word-break: break-all;
+    }
+    .cert-qr {
+      margin-top: 16px;
+      margin-bottom: 28px;
+      display: flex;
+      justify-content: center;
+    }
+    .cert-qr img {
+      width: 100px;
+      height: 100px;
+      border-radius: 8px;
+      padding: 4px;
+      background: white;
     }
 
     .actions {
@@ -214,13 +254,30 @@
         <div class="card-title">🏆 Certificate Issued</div>
         <div class="card-subtitle">Congratulations, <span class="participant-name" id="certName"></span>!</div>
         <div class="cert-image-wrapper">
-          <img id="certImage" alt="Certificate" />
+          <img id="certImage" alt="Certificate" crossorigin="anonymous" />
+        </div>
+        <div class="cert-details">
+          <div class="detail-item">
+            <label>Course / Event</label>
+            <div id="certCourse">—</div>
+          </div>
+          <div class="detail-item">
+            <label>Issue Date</label>
+            <div id="certDate">—</div>
+          </div>
+          <div class="detail-item">
+            <label>Certificate No.</label>
+            <div id="certId">—</div>
+          </div>
+        </div>
+        <div class="cert-qr">
+          <img id="certQr" alt="Verify QR Code" style="display:none;" />
         </div>
         <div class="actions">
-          <a id="downloadBtn" class="btn btn-primary" download>
+          <button id="downloadPdfBtn" class="btn btn-primary">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2v10M5 8l4 4 4-4M3 14h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-            Download Certificate
-          </a>
+            Download PDF
+          </button>
           <button class="btn btn-secondary" onclick="window.print()">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="4" y="7" width="10" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M5 7V4a1 1 0 011-1h6a1 1 0 011 1v3" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="10" r="0.8" fill="currentColor"/></svg>
             Print
@@ -295,9 +352,31 @@
 
         // Show certificate
         document.getElementById('certName').textContent = data.name || 'Participant';
-        document.getElementById('certImage').src = data.certificateUrl;
-        document.getElementById('downloadBtn').href = data.certificateUrl;
-        document.getElementById('downloadBtn').download = `${data.name || 'certificate'}_certificate.jpg`;
+        const imgEl = document.getElementById('certImage');
+        imgEl.src = data.certificateUrl;
+
+        // Populate extra details
+        document.getElementById('certCourse').textContent = data.courseName || data.teamName || 'Mr.Certi Event';
+        document.getElementById('certId').textContent = data.id || participantId;
+        
+        let issueDate = '—';
+        if (data.createdAt && data.createdAt.seconds) {
+          issueDate = new Date(data.createdAt.seconds * 1000).toLocaleDateString();
+        } else if (data.createdAt) {
+          issueDate = new Date(data.createdAt).toLocaleDateString();
+        }
+        document.getElementById('certDate').textContent = issueDate;
+
+        // Generate QR code for verification link
+        const currentUrl = window.location.href;
+        const qrEl = document.getElementById('certQr');
+        qrEl.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(currentUrl)}`;
+        qrEl.style.display = 'block';
+
+        // Setup PDF download
+        document.getElementById('downloadPdfBtn').addEventListener('click', () => {
+          downloadPdf(data.certificateUrl, data.name || 'Participant');
+        });
 
         document.title = `${data.name}'s Certificate – Mr.Certi`;
 
@@ -318,6 +397,47 @@
       loadingState.style.display = 'none';
       errorState.style.display = 'block';
       document.getElementById('errorMsg').textContent = msg;
+    }
+
+    function downloadPdf(imageUrl, participantName) {
+      const btn = document.getElementById('downloadPdfBtn');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = 'Generating PDF...';
+      btn.disabled = true;
+
+      const img = new Image();
+      img.crossOrigin = 'Anonymous';
+      img.onload = function() {
+        const { jsPDF } = window.jspdf;
+        // Calculate orientation based on aspect ratio
+        const orientation = img.width > img.height ? 'l' : 'p';
+        const pdf = new jsPDF(orientation, 'px', [img.width, img.height]);
+        
+        // Create canvas to handle transparency/cors safely
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        
+        try {
+          const imgData = canvas.toDataURL('image/jpeg', 1.0);
+          pdf.addImage(imgData, 'JPEG', 0, 0, img.width, img.height);
+          pdf.save(`${participantName}_Certificate.pdf`);
+        } catch (e) {
+          console.error('PDF Generation Error:', e);
+          alert('Failed to generate PDF. Cross-origin restriction might be blocking the image data.');
+        }
+
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      };
+      img.onerror = function() {
+        alert('Failed to load certificate image for PDF generation.');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      };
+      img.src = imageUrl;
     }
 
     loadCertificate();

@@ -992,7 +992,7 @@ const EMAILJS_PUBLIC_KEY = 'd0eRJ2yYf_e-ruGhy'; // Replace with your Public Key
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 // ====== APP URL (update this to your deployed domain) ======
-const APP_URL = 'https://PavanWadile77.github.io/Mr.Certi.H';
+const APP_URL = 'https://mr-certi.web.app';
 // ========================================================
 
 async function sendCertificateEmail(email, name, participantId) {
