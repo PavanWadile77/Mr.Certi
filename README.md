@@ -1,29 +1,65 @@
-Mr.Certi – E-Certificate Distribution Platform
-https://mr-certi.web.app/
+# Mr.Certi — E-Certificate Distribution Platform
 
-A modern web application for automated certificate generation, distribution, and tracking.
+**Mr.Certi** is a web platform for generating, distributing, tracking, and verifying digital certificates.
 
+**Live:** https://mr-certi.web.app/
 
 ## ✨ Features
 
-- **Organizer Dashboard** – Upload participant lists (CSV), manage certificate templates, bulk-generate certificates, send email notifications, track delivery status
-- **Participant Dashboard** – Login, view and download certificates
-- **Firebase Backend** – Authentication, Firestore Database, Cloud Storage
-- **Auto Certificate Generation** – Canvas-based name insertion into templates
-- **Sky Blue + White Theme** – Clean, modern, responsive UI
+- Organizer dashboard for certificate management
+- Participant certificate access
+- Certificate template support
+- Bulk certificate generation
+- Email distribution workflow
+- QR-based certificate verification
+- Certificate download
+- Delivery/status tracking
+- Firebase Authentication, Firestore, and Storage
+- Responsive web interface
+
+## 🧩 Workflow
+
+```text
+Organizer
+   ↓
+Upload participant data
+   ↓
+Configure certificate template
+   ↓
+Generate certificates
+   ↓
+Distribute by email
+   ↓
+Participant downloads certificate
+   ↓
+QR verification
+```
 
 ## 🛠 Tech Stack
 
-- **Frontend:** HTML, CSS, JavaScript (ES Modules)
-- **Backend:** Firebase (Auth, Firestore, Storage)
-- **Fonts:** Google Fonts (Inter)
+- HTML5
+- CSS3
+- JavaScript (ES Modules)
+- Firebase Authentication
+- Cloud Firestore
+- Firebase Storage
+- Google Fonts
 
-## 🔥 Firebase Setup
+## 🔧 Firebase Setup
 
-1. Enable **Email/Password** authentication in Firebase Console → Authentication → Sign-in method
-2. Create a **Firestore Database** in Firebase Console
-3. Enable **Firebase Storage**
+1. Create a Firebase project.
+2. Enable the required Authentication provider.
+3. Create a Firestore database.
+4. Enable Firebase Storage.
+5. Add your Firebase configuration to the application.
+6. Run the project with a local web server.
 
-## 📜 License
+> Never commit private API keys, service-account credentials, or production secrets.
 
-MIT
+## 📁 Repository
+
+https://github.com/PavanWadile77/Mr.Certi
+
+## 👨‍💻 Author
+
+**Pavan Wadile**
