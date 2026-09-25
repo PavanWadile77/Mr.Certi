@@ -1,65 +1,41 @@
-# Mr.Certi — E-Certificate Distribution Platform
+# Mr.Certi 🎓
 
-**Mr.Certi** is a web platform for generating, distributing, tracking, and verifying digital certificates.
+**Mr.Certi** is a digital certificate distribution platform for creating, distributing, tracking, and verifying certificates at scale.
 
-**Live:** https://mr-certi.web.app/
+🌐 **Live:** https://mr-certi.web.app/
 
-## ✨ Features
-
-- Organizer dashboard for certificate management
-- Participant certificate access
-- Certificate template support
+## ✨ Core Features
+- Organizer dashboard
+- Certificate template management
 - Bulk certificate generation
 - Email distribution workflow
-- QR-based certificate verification
+- Participant certificate access
+- QR-based public verification
 - Certificate download
 - Delivery/status tracking
 - Firebase Authentication, Firestore, and Storage
-- Responsive web interface
 
-## 🧩 Workflow
-
+## 🔄 Workflow
 ```text
-Organizer
-   ↓
-Upload participant data
-   ↓
-Configure certificate template
-   ↓
-Generate certificates
-   ↓
-Distribute by email
-   ↓
-Participant downloads certificate
-   ↓
-QR verification
+Organizer → Participant Data → Template → Generate
+         → Email Distribution → Download → QR Verification
 ```
 
-## 🛠 Tech Stack
+## 🛠️ Tech Stack
+**HTML5 · CSS3 · JavaScript · Firebase Authentication · Firestore · Firebase Storage**
 
-- HTML5
-- CSS3
-- JavaScript (ES Modules)
-- Firebase Authentication
-- Cloud Firestore
-- Firebase Storage
-- Google Fonts
+## 🚀 Getting Started
+1. Configure a Firebase project.
+2. Enable Authentication, Firestore, and Storage.
+3. Add the required Firebase configuration.
+4. Run through a local web server.
 
-## 🔧 Firebase Setup
+## 🔐 Security
+Never commit service-account credentials, private keys, or production secrets.
 
-1. Create a Firebase project.
-2. Enable the required Authentication provider.
-3. Create a Firestore database.
-4. Enable Firebase Storage.
-5. Add your Firebase configuration to the application.
-6. Run the project with a local web server.
-
-> Never commit private API keys, service-account credentials, or production secrets.
-
-## 📁 Repository
-
-https://github.com/PavanWadile77/Mr.Certi
+## 🔗 Links
+- 🌐 [Live Application](https://mr-certi.web.app/)
+- 💻 [GitHub Repository](https://github.com/PavanWadile77/Mr.Certi)
 
 ## 👨‍💻 Author
-
 **Pavan Wadile**
