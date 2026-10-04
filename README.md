@@ -1,5 +1,14 @@
 # Mr.Certi 🎓
 
+<div align="center">
+
+**Web Application • Certificate Distribution**
+
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+
+</div>
+
+
 **Mr.Certi** is a digital certificate distribution platform for creating, distributing, tracking, and verifying certificates at scale.
 
 🌐 **Live:** https://mr-certi.web.app/
@@ -39,3 +48,18 @@ Never commit service-account credentials, private keys, or production secrets.
 
 ## 👨‍💻 Author
 **Pavan Wadile**
+
+
+## 🔧 Engineering Focus
+
+Certificate generation, distribution, participant access, delivery tracking and QR verification.
+
+---
+
+<div align="center">
+
+**Pavan Wadile · B.Tech Information Technology**
+
+[GitHub](https://github.com/PavanWadile77)
+
+</div>
